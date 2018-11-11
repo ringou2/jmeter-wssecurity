@@ -37,9 +37,11 @@ public class TestWSSSecurityPreProcessorBase {
     }
 
     static void initCertSettings(CryptoWSSecurityPreProcessor mod, String signatureAlgorithm) {
-        mod.setKeystoreFile("src/test/resources/keystore.jks");
+        boolean symmetric = WSSSignaturePreProcessor.isSymmetricSignatureAlgorithm(signatureAlgorithm);
+        mod.setKeystoreFile(symmetric ? "src/test/resources/keystore.jceks" : "src/test/resources/keystore.jks");
         mod.setKeystorePassword("changeit");
         mod.setCertAlias(
+            symmetric ? "hmac" :
             signatureAlgorithm.startsWith("http://www.w3.org/2000/09/xmldsig#dsa") ? "dsa" :
             signatureAlgorithm.startsWith("http://www.w3.org/2001/04/xmldsig-more#ecdsa") ? "ec" :
             "rsa");

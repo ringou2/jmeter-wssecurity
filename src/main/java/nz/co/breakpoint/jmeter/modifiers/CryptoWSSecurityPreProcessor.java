@@ -16,6 +16,7 @@ import org.apache.wss4j.dom.message.WSSecBase;
 import static org.apache.wss4j.common.crypto.Merlin.PREFIX;
 import static org.apache.wss4j.common.crypto.Merlin.KEYSTORE_FILE;
 import static org.apache.wss4j.common.crypto.Merlin.KEYSTORE_PASSWORD;
+import static org.apache.wss4j.common.crypto.Merlin.KEYSTORE_TYPE;
 
 /**
  * Abstract parent class of any preprocessors that perform crypto operations (e.g. signature or encryption).
@@ -85,6 +86,9 @@ public abstract class CryptoWSSecurityPreProcessor extends AbstractWSSecurityPre
 
     public void setKeystoreFile(String keystoreFile) {
         cryptoProps.setProperty(PREFIX+KEYSTORE_FILE, keystoreFile);
+        if (keystoreFile != null && keystoreFile.toLowerCase().endsWith("jceks")) {
+            cryptoProps.setProperty(PREFIX+KEYSTORE_TYPE, "jceks");
+        }
     }
 
     public String getKeystorePassword() {

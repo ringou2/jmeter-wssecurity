@@ -25,6 +25,7 @@ public class TestWSSSignaturePreProcessor extends TestWSSSecurityPreProcessorBas
                 for (String sa : WSSSignaturePreProcessor.signatureAlgorithms) {
                     for (String da : WSSSignaturePreProcessor.digestAlgorithms) {
                         for (boolean us : new boolean[]{true, false}) {
+                            if (WSSSignaturePreProcessor.isSymmetricKeyIdentifier(ki) != WSSSignaturePreProcessor.isSymmetricSignatureAlgorithm(sa)) continue;
                             initCertSettings(mod, sa);
                             mod.setKeyIdentifier(ki);
                             mod.setSignatureCanonicalization(sc);
